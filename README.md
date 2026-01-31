@@ -39,3 +39,8 @@ This repository provides the necessary logic to patch an existing Typeless insta
 本资源库提供了修复现有 Typeless 安装所需的逻辑。
 - `patch-renderer.js`: 自动化修复前端验证逻辑。
 - `keyboard-helper-child-process.js`: 已修复的后端处理程序，以提高稳定性。
+
+---
+
+### Aiya Site Reference
+![Aiya Site](./aiya-site.png)

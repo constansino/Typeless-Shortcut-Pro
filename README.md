@@ -19,6 +19,8 @@
 2.  **Customization Unlock (Frontend):** Patched `index2.js` in the renderer bundle to bypass the `Q` validation function. All restrictions (alphanumeric-only, too-many-keys, system-reserved, and consecutive keys) have been removed, allowing total freedom in shortcut assignment.
 
 ### How to Apply
+> **Note:** These patches require the application resources to be unpacked. If your installation has a `resources/app.asar` file, you must first unpack it to a `resources/app` folder (using `asar extract` or similar tools) before running the patches.
+
 This repository provides the necessary logic to patch an existing Typeless installation.
 - `patch-renderer.js`: Automates the patching of the frontend validation logic.
 - `keyboard-helper-child-process.js`: The patched backend handler for stability.
@@ -36,6 +38,8 @@ This repository provides the necessary logic to patch an existing Typeless insta
 2.  **自由定义解锁（前端）：** 修复了渲染器包中的 `index2.js`，直接跳过了 `Q` 验证函数。所有限制（仅限字母数字、键位过多、系统保留以及连续按键）均已被移除，用户可以完全自由地定义快捷键。
 
 ### 使用方法
+> **注意：** 这些补丁需要解压应用程序资源。如果您的安装目录中有 `resources/app.asar` 文件，在运行补丁之前，您必须先将其解压到 `resources/app` 文件夹（使用 `asar extract` 或类似工具）。
+
 本资源库提供了修复现有 Typeless 安装所需的逻辑。
 - `patch-renderer.js`: 自动化修复前端验证逻辑。
 - `keyboard-helper-child-process.js`: 已修复的后端处理程序，以提高稳定性。

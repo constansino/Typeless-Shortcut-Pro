@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.3] - 2026-02-07
+
+### Verified
+- **Typeless v0.9.4 Compatibility**: Confirmed that all patch logic remains valid for the latest version.
+- **ASAR Handling**: Added instructions to rename the original `app.asar` to prevent the application from bypassing the patched `app` folder.
+
 ## [1.0.2] - 2026-02-03
 
 ### Fixed

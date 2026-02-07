@@ -1,7 +1,7 @@
 # Typeless Shortcut Pro (Optimizer & Fix Kit)
 
 **Author:** Constantino  
-**Version:** 1.0.2 (Beta)  
+**Version:** 1.0.3  
 **License:** MIT
 
 [English](#english) | [中文](#中文)
@@ -32,7 +32,7 @@ Our path to a stable application involved three major iterations of reverse engi
     *   The `keydown` event is registered by Typeless.
     *   The OS interrupt swallows the `keyup` event.
     *   **Result:** Typeless's state machine enters a "zombie state," believing the user is holding the keys down forever. This polluted the input buffer, causing auto-triggers and UI conflicts.
-*   **The Solution: Heuristic Watchdog (v1.0.2):**
+*   **The Solution: Heuristic Watchdog (v1.0.3):**
     *   We implemented a self-correcting "Watchdog" mechanism in the backend.
     *   The system now timestamps the last state change.
     *   **Logic:** `if (keys_pressed && (now - last_update > 3000ms)) -> RESET`.
@@ -49,6 +49,7 @@ Our path to a stable application involved three major iterations of reverse engi
 
 1.  **Backend Fix:** Replace `resources/app/dist/main/keyboard-helper-child-process.js` with the version from this repo.
 2.  **Frontend Fix:** Run `node patch-renderer.js` to unlock the UI restrictions.
+3.  **Critical Step:** Rename the original `resources/app.asar` to `resources/app.asar.original`. If this file exists, Typeless will prioritize it over the patched `app` folder, causing the patches to fail.
 
 ---
 
@@ -74,9 +75,9 @@ Our path to a stable application involved three major iterations of reverse engi
 *   **症状：** 用户会遇到极度诡异的现象：某个快捷键（如 `Shift + Ctrl + Z`）似乎“粘”住了。打开设置菜单时，输入框会自动填入这个快捷键；有时界面甚至会闪烁，仿佛有隐形人在按键。
 *   **根本原因分析：** 这是一个极其隐蔽的状态同步问题。当系统级中断发生时（例如：按下截图快捷键 Win+Shift+S、弹出 UAC 窗口或锁屏），中断会“吞掉”按键抬起 (`keyup`) 的信号。
     *   Typeless 记录了按键按下 (`keydown`)。
-    *   系统拦截了按键抬起 (`keyup`)。
+    *   系统拦截了按键抬起 (`keyup`) 的信号。
     *   **结果：** Typeless 的内部状态机进入“僵尸状态”，认为用户一直按着这些键不放。这污染了输入缓冲区，导致了自动触发和 UI 冲突。
-*   **终极方案：启发式看门狗 (Watchdog v1.0.2)：**
+*   **终极方案：启发式看门狗 (Watchdog v1.0.3)：**
     *   我们在后端实现了一个自我纠错的“看门狗”机制。
     *   系统现在会为最后一次按键状态变更打上时间戳。
     *   **逻辑：** `如果 (有键按下 && (当前时间 - 最后更新时间 > 3000毫秒)) -> 强制重置`。
@@ -92,9 +93,5 @@ Our path to a stable application involved three major iterations of reverse engi
 > **前置条件：** 在应用补丁之前，您必须先将 `resources/app.asar` 解压到 `resources/app` 文件夹。
 
 1.  **后端修复：** 使用本仓库中的 `keyboard-helper-child-process.js` 替换 `resources/app/dist/main/keyboard-helper-child-process.js`。
-2.  **前端修复：** 运行 `node patch-renderer.js` 以解除 UI 限制。
-
----
-
-### Aiya Site Reference
-![Aiya Site](./aiya-site.png)
+2.  **Frontend Fix:** 运行 `node patch-renderer.js` 以解除 UI 限制。
+3.  **关键步骤：** 将原始的 `resources/app.asar` 重命名为 `resources/app.asar.original`。如果此文件存在，Typeless 会优先读取它而忽略已打补丁的 `app` 文件夹，导致补丁失效。
